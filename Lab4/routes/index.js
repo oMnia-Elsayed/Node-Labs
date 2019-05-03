@@ -8,17 +8,20 @@ router.get('/', function(req, res, next) {
 });
 
 
-router.get('/Message' ,async (req , res , next) => {
-  let msg = await MessageModel.find({} , (err , data)=> {
-    return data;
+router.get('/Messages' , (req , res , next) => {
+   MessageModel.find((err , data) => {
+    res.send(data)
   });
-  res.json(msg);
 });
 
-router.post('/Message', (req , res , next) => {
-  let data = req.body;
-  MessageModel.create(data);
-  res.json(data);
+router.get('/createMessage' , (req , res , next) => {
+  res.send('createMessage');
+});
+
+router.post('/createMessage', (req , res , next) => {
+  let data = new MessageModel (req.body);
+  data.save()
+  .then(MessageModel => res.send(MessageModel))
 
 });
 

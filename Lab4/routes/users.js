@@ -14,10 +14,18 @@ router.get('/',async function(req, res, next) {
 });
 
 // Create
-router.post('/Create' , (req , res , next) => {
-  let data = req.body;
-  USerModel.create(data);
-  res.json(data);
+// router.post('/Create' , (req , res , next) => {
+//   let data = req.body;
+//   USerModel.create(data);
+//   res.json(data);
+// });
+
+router.post('/create', (req, res, next) => {
+  const user = new USermodel(req.body)
+  user
+    .save()
+    .then(user => res.send(user))
+    .catch(err => next(createError(400, err.message)));
 });
 
 router.get('/:id' , async (req , res , next) => {
